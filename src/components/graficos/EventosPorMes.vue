@@ -1,11 +1,13 @@
 <template>
   <div>
     <h3>Eventos por Mês</h3>
-    <BaseChart
-      type="bar"
-      :data="chartData"
-      :options="chartOptions"
-    />
+    <div class="grafico-box">
+      <BaseChart
+        type="bar"
+        :data="chartData"
+        :options="chartOptions"
+      />
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ export default {
       chartData: {
         labels: [],
         datasets: [{
-          label: 'Eventos',
+          label: 'Eventos por Mês',
           data: [],
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
         }],
@@ -29,6 +31,12 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        }
       }
     };
   },
@@ -38,7 +46,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('/api/relatorios/eventos-por-mes');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/relatorios/eventos-por-mes`);
         this.rawData = response.data;
 
         this.chartData.labels = this.rawData.map(item => item.mes);
@@ -52,9 +60,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
-/* ajuste o tamanho do gráfico */
-div {
-  height: 400px;
-}
+
 </style>

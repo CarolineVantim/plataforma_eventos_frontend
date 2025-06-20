@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h3>Eventos por Local</h3>
-    <BaseChart
-      type="bar"
-      :data="chartData"
-      :options="chartOptions"
-    />
+    <h3>Eventos por Tema</h3>
+    <div class="grafico-box">
+      <BaseChart
+        type="bar"
+        :data="chartData"
+        :options="chartOptions"
+      />
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ export default {
       chartData: {
         labels: [],
         datasets: [{
-          label: 'Eventos',
+          label: 'Eventos por Tema',
           data: [],
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
         }],
@@ -38,7 +40,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('/api/relatorios/eventos-por-tema');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/relatorios/eventos-por-tema`);
         this.rawData = response.data;
 
         this.chartData.labels = this.rawData.map(item => item.tema);
@@ -53,8 +55,5 @@ export default {
 </script>
 
 <style scoped>
-/* ajuste o tamanho do gráfico */
-div {
-  height: 400px;
-}
+
 </style>

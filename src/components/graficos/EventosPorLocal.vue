@@ -1,11 +1,13 @@
 <template>
   <div>
     <h3>Eventos por Localização</h3>
-    <BaseChart
-      type="bar"
-      :data="chartData"
-      :options="chartOptions"
-    />
+    <div class="grafico-box">
+      <BaseChart
+        type="bar"
+        :data="chartData"
+        :options="chartOptions"
+      />
+    </div>
   </div>
 </template>
 
@@ -28,6 +30,7 @@ export default {
       },
       chartOptions: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: true,
@@ -40,7 +43,7 @@ export default {
   async mounted() {
     try {
       const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/relatorios/eventos-por-local`);
-      
+
       const dadosLimpos = response.data.map(item => ({
         localizacao: item.localizacao.replace(/^"|"$/g, ''),
         quantidade: item.quantidade
@@ -54,3 +57,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

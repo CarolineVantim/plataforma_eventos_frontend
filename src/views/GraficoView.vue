@@ -1,28 +1,30 @@
 <template>
-  <div class="grafico-container">
-    <h1>Relatórios e Gráficos</h1>
-    
-    <section class="grafico-item">
-      <EventosPorLocal />
-    </section>
-    
-    <section class="grafico-item">
-      <EventosPorTema />
-    </section>
-    
-    <section class="grafico-item">
-      <EventosPorMes />
-    </section>
-    
-    <section class="grafico-item">
-      <EventosPorPromotor />
-    </section>
-    
-    <section class="grafico-item">
-      <EventosPorVagas />
-    </section>
-  </div>
+  <b-container fluid>
+    <b-row class="mb-4">
+
+      <b-col cols="12" md="4">
+        <EventosPorLocal />
+      </b-col>
+      <b-col cols="12" md="4">
+        <EventosPorMes />
+      </b-col>
+      <b-col cols="12" md="4">
+        <EventosPorPromotor />
+      </b-col>
+    </b-row>
+
+    <b-row>
+
+      <b-col cols="12" md="6">
+        <EventosPorTema />
+      </b-col>
+      <b-col cols="12" md="6">
+        <EventosPorVagas />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
+
 
 <script>
 import EventosPorLocal from '../components/graficos/EventosPorLocal.vue';

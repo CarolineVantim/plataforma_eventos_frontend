@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Eventos por Local</h3>
+    <h3>Eventos com Vagas</h3>
     <BaseChart
       type="bar"
       :data="chartData"
@@ -21,14 +21,24 @@ export default {
       chartData: {
         labels: [],
         datasets: [{
-          label: 'Eventos',
+          label: 'Total de Vagas Disponíveis por Tema',
           data: [],
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          backgroundColor: 'rgba(255, 99, 132, 0.6)',
         }],
       },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
       }
     };
   },
@@ -38,11 +48,12 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('/api/relatorios/eventos-por-vagas');
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/relatorios/eventos-com-vagas`);
         this.rawData = response.data;
 
-        this.chartData.labels = this.rawData.map(item => item.vagas);
-        this.chartData.datasets[0].data = this.rawData.map(item => item.quantidade);
+        // Atualiza gráfico com os temas e a soma de vagas
+        this.chartData.labels = this.rawData.map(item => item.tema);
+        this.chartData.datasets[0].data = this.rawData.map(item => item.total_vagas_disponiveis);
 
       } catch (error) {
         console.error('Erro ao buscar dados', error);
@@ -53,8 +64,9 @@ export default {
 </script>
 
 <style scoped>
-/* ajuste o tamanho do gráfico */
-div {
-  height: 400px;
+.grafico-box {
+  height: 150px;
+  width: 50%;
+  position: relative;
 }
 </style>
